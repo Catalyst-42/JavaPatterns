@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+}
+
+task createDir(type: Exec) {
+    commandLine 'mkdir', '-p', 'docker/app'
+}
+
+task copyJar(dependsOn: jar, type: Copy) {
+    from jar.archiveFile
+    into 'docker/app'
+    rename { 'app.jar' }
+}
+
+task buildDockerImage(dependsOn: copyJar, type: Exec) {
+    doFirst {
+        println 'Building Docker image...'
+    }
+
+    commandLine 'docker', 'build', '-t', 'my-java-app', '.', '--build-arg', "JAR_FILE=docker/app/app.jar", '-f', 'docker/Dockerfile'
+}
+
+task runContainer(dependsOn: buildDockerImage, type: Exec) {
+    doFirst {
+        println 'Running Docker container...'
+    }
+
+    commandLine 'docker', 'run', '--rm', '-p', '8080:8080', 'my-java-app'
+}
+
+// ./gradlew runContainer
