@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head>
+        <title>Личная страница</title>
+    </head>
+    <body>
+        <h1 th:inline="text">Вы успешно вошли как <span th:remove="tag" sec:authentication="name">userName</span>!</h1>
+        <form th:action="@{/home}" method="post">
+            <input type="submit" value="На главную"/>
+        </form>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Выйти"/>
+        </form>
+    </body>
+</html>

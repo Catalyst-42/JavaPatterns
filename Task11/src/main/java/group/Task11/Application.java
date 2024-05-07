@@ -19,5 +19,5 @@ public class Application extends SpringBootServletInitializer implements HealthI
     }
 }
 
-// java -jar build/libs/Task11-0.0.1-SNAPSHOT.jar
+// java -jar '/Users/control/Desktop/Extension/JavaPatterns/Task11/build/libs/YaWell.jar'
 // http://localhost:8080/actuator/health
